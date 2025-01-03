@@ -1,0 +1,823 @@
+/* 全局样式设置 */
+:root {
+    --primary-color: #0071e3;
+    --text-color: #1d1d1f;
+    --secondary-text: #86868b;
+    --background: #f5f5f7;
+    --card-background: #ffffff;
+    --border-radius: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--background);
+    color: var(--text-color);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 容器样式 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* 头部样式 */
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: var(--secondary-text);
+    font-size: 1.1rem;
+}
+
+/* 上传区域样式 */
+.upload-area {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.upload-box {
+    border: 2px dashed #e5e5e5;
+    border-radius: calc(var(--border-radius) - 4px);
+    padding: 3rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-box:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(0,113,227,0.05);
+}
+
+.upload-icon {
+    color: var(--secondary-text);
+    margin-bottom: 1rem;
+}
+
+.upload-hint {
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* 预览区域样式 */
+.preview-section {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.preview-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.preview-box {
+    text-align: center;
+}
+
+.preview-box h3 {
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.image-preview {
+    background: #fafafa;
+    border-radius: calc(var(--border-radius) - 4px);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.image-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.image-info {
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+}
+
+/* 控制区域样式 */
+.controls {
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e5e5;
+}
+
+.quality-control {
+    margin-bottom: 1.5rem;
+}
+
+.quality-control label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    max-width: 400px;
+}
+
+input[type="range"] {
+    flex: 1;
+    height: 6px;
+    min-width: 300px;
+    background: #e5e5e5;
+    border-radius: 2px;
+    -webkit-appearance: none;
+    cursor: pointer;
+    position: relative;
+    background-image: linear-gradient(var(--primary-color), var(--primary-color));
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    background: var(--primary-color);
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(0.95);
+    background: var(--primary-color);
+}
+
+#scaleValue {
+    min-width: 4rem;
+    text-align: right;
+    color: var(--secondary-text);
+    font-weight: 500;
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.download-btn:hover {
+    background-color: #0077ed;
+    transform: translateY(-1px);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .preview-container {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+}
+
+/* 工具网格布局 */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 1rem 0;
+}
+
+/* 工具卡片样式 */
+.tool-card {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+
+.tool-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background);
+    border-radius: 20px;
+    color: var(--primary-color);
+}
+
+.tool-card h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.tool-card p {
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* 即将推出卡片样式 */
+.coming-soon {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.coming-soon .tool-icon {
+    color: var(--secondary-text);
+}
+
+/* 导航栏样式 */
+.nav-bar {
+    background: var(--card-background);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 1rem 0;
+    font-weight: 500;
+}
+
+.nav-back:hover {
+    color: var(--primary-color);
+}
+
+.nav-back svg {
+    transition: transform 0.3s ease;
+}
+
+.nav-back:hover svg {
+    transform: translateX(-4px);
+}
+
+/* 裁剪区域样式 */
+.crop-section {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.crop-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.crop-area {
+    width: 100%;
+    height: 500px;
+    background: #fafafa;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.crop-area img {
+    max-width: 100%;
+    display: block;
+}
+
+/* 裁剪控制区域样式 */
+.crop-controls {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    padding: 1rem;
+    background: #fff;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.control-group {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.aspect-ratio-control,
+.export-control {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ratio-buttons,
+.format-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.ratio-btn,
+.format-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e5e5e5;
+    border-radius: var(--border-radius);
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.ratio-btn.active,
+.format-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.crop-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: flex-end;
+    margin-bottom: 0.5rem;
+}
+
+.crop-btn:hover {
+    background-color: #0077ed;
+    transform: translateY(-1px);
+}
+
+/* 预览区域样式 */
+.preview-box {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e5e5;
+}
+
+.preview-box label {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.preview-container {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.preview-item {
+    text-align: center;
+}
+
+.preview-title {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+}
+
+.preview-frame {
+    overflow: hidden;
+    background: #fafafa;
+    border: 1px solid #e5e5e5;
+    border-radius: calc(var(--border-radius) - 4px);
+    position: relative;
+}
+
+.preview-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.preview-image img {
+    max-width: none;
+    max-height: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 预览框尺寸 */
+.preview-frame.square {
+    width: 120px;
+    height: 120px;
+}
+
+.preview-frame.landscape {
+    width: 160px;
+    height: 120px;
+}
+
+.preview-frame.widescreen {
+    width: 160px;
+    height: 90px;
+}
+
+/* 响应式预览 */
+@media (max-width: 768px) {
+    .preview-container {
+        flex-wrap: wrap;
+    }
+    
+    .preview-frame.square {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .preview-frame.landscape {
+        width: 133px;
+        height: 100px;
+    }
+    
+    .preview-frame.widescreen {
+        width: 133px;
+        height: 75px;
+    }
+}
+
+/* 自定义比例输入框样式 */
+.custom-ratio {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #e5e5e5;
+    border-radius: var(--border-radius);
+    background: white;
+}
+
+.ratio-input {
+    width: 50px;
+    padding: 0.25rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.ratio-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.custom-ratio span {
+    color: var(--secondary-text);
+    font-weight: 500;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .crop-controls {
+        grid-template-columns: 1fr;
+    }
+    
+    .control-group {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .crop-btn {
+        width: 100%;
+    }
+    
+    .ratio-buttons {
+        justify-content: center;
+    }
+}
+
+/* 图片尺寸调整工具样式 */
+.resize-section {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.resize-controls {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.mode-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.mode-btn {
+    padding: 0.8rem 1.5rem;
+    border: 1px solid #e5e5e5;
+    border-radius: var(--border-radius);
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.mode-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.scale-input-group,
+.size-input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.scale-input-group input,
+.size-input-group input {
+    width: 100px;
+    padding: 0.5rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.size-mode select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    background: white;
+}
+
+.size-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.resize-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: flex-end;
+}
+
+.resize-btn:hover {
+    background-color: #0077ed;
+    transform: translateY(-1px);
+}
+
+/* 图片列表样式 */
+.image-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.image-item {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.image-preview {
+    width: 100%;
+    height: 150px;
+    background: #fafafa;
+    border-radius: calc(var(--border-radius) - 4px);
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.image-info {
+    font-size: 0.9rem;
+    color: var(--secondary-text);
+}
+
+.image-name {
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .resize-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .mode-buttons {
+        flex-direction: column;
+    }
+
+    .size-inputs {
+        flex-direction: column;
+    }
+
+    .resize-btn {
+        width: 100%;
+        margin-top: 1rem;
+    }
+}
+
+/* 添加更多图片按钮样式 */
+.add-more-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: white;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.add-more-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* 调整控制组布局 */
+.resize-controls .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* 添加横向布局容器 */
+.control-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    align-items: start;
+}
+
+/* 调整各控制块样式 */
+.mode-control,
+.size-options,
+.export-control {
+    flex: 1;
+    min-width: 0;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .control-row {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .resize-controls {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 尺寸输入区域新样式 */
+.size-inputs-wrapper {
+    margin-top: 1rem;
+}
+
+.size-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.size-input-pair {
+    display: flex;
+    gap: 1rem;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.input-group label {
+    width: 40px;
+    flex-shrink: 0;
+}
+
+.input-group input {
+    flex: 1;
+    min-width: 80px;
+    padding: 0.5rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .size-inputs {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .size-input-group {
+        flex-direction: row;
+    }
+} 
