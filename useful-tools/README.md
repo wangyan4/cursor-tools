@@ -36,6 +36,14 @@
 - 支持图片倾斜校正
 - 支持文字清晰度增强
 
+要完整实现图片转Word的功能，还需要：
+- 添加后端API支持
+- 实现实际的OCR文字识别
+- 实现Word文档生成和格式转换
+- 添加文件大小限制和格式验证
+- 添加进度提示
+- 添加错误处理
+
 ## 技术栈
 
 - 前端：HTML5 + CSS3 + JavaScript
@@ -45,3 +53,38 @@
 - 文档转换：OCR + Word文档生成
 
 ## 项目结构
+"""
+project/
+├── index.html # 主页面
+├── css/
+│ └── style.css # 样式文件
+├── js/
+│ ├── compress.js # 图片压缩功能
+│ ├── crop.js # 图片裁剪功能
+│ ├── resize.js # 图片尺寸调整功能
+│ ├── date-calculator.js # 日期计算功能
+│ ├── lunar.min.js # 农历转换库
+│ └── img-to-word.js # 图片转Word功能
+└── tools/
+├── image-compress.html # 图片压缩页面
+├── image-crop.html # 图片裁剪页面
+├── image-resize.html # 图片尺寸调整页面
+├── date-calculator.html # 日期计算器页面
+└── img-to-word.html # 图片转Word页面
+
+"""
+
+## 浏览器支持
+
+- Chrome (推荐)
+- Firefox
+- Safari
+- Edge
+
+## 开发计划
+
+- [ ] 添加更多图片处理功能
+- [ ] 优化移动端体验
+- [ ] 添加批量处理进度显示
+- [ ] 支持更多文件格式
+- [ ] 添加用户配置保存功能
