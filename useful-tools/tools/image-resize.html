@@ -29,13 +29,13 @@
 
         <!-- 上传区域 -->
         <div class="upload-area" id="uploadArea">
-            <input type="file" id="imageInput" accept="image/png, image/jpeg" multiple hidden>
+            <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp" multiple hidden>
             <div class="upload-box">
                 <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
                 </svg>
                 <p>点击或拖拽图片到此处上传</p>
-                <p class="upload-hint">支持批量上传 PNG、JPG 格式</p>
+                <p class="upload-hint">支持批量上传 PNG、JPG、WebP 格式</p>
             </div>
         </div>
 
@@ -82,7 +82,7 @@
                     <div class="scale-options" id="scaleOptions">
                         <label>缩放比例</label>
                         <div class="slider-container">
-                            <input type="range" id="scaleRatio" min="1" max="150" value="100">
+                            <input type="range" id="scaleRatio" class="resize-slider" min="1" max="150" value="100">
                             <span id="scaleValue">100%</span>
                         </div>
                     </div>

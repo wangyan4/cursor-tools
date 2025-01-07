@@ -61,6 +61,7 @@ function handleImage(file) {
             originalPreview.src = originalImage.src;
             compressImage();
             previewSection.style.display = 'block';
+            updateSliderProgress(qualitySlider);
         };
     };
     reader.readAsDataURL(file);
@@ -88,9 +89,21 @@ function compressImage() {
     compressedSize.textContent = formatFileSize(compressedBytes);
 }
 
-// 质量滑块事件
-qualitySlider.addEventListener('input', () => {
-    qualityValue.textContent = `${qualitySlider.value}%`;
+// 更新滑动条进度条
+function updateSliderProgress(slider) {
+    const value = (slider.value - slider.min) / (slider.max - slider.min) * 100;
+    if (slider.classList.contains('compress-slider')) {
+        slider.style.background = `linear-gradient(to right, var(--primary-color) 0%, var(--primary-color) ${value}%, #e5e5e5 ${value}%, #e5e5e5 100%)`;
+    }
+}
+
+// 初始化滑动条进度
+updateSliderProgress(qualitySlider);
+
+// 监听滑动条变化
+qualitySlider.addEventListener('input', function() {
+    qualityValue.textContent = `${this.value}%`;
+    updateSliderProgress(this);
     if (originalImage) {
         compressImage();
     }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片转Word - 在线工具</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>图片转Word</h1>
+            <p class="subtitle">智能将图片转换为可编辑的Word文档，支持批量处理</p>
+        </div>
+
+        <div class="upload-area">
+            <div class="upload-box" id="uploadBox">
+                <div class="upload-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                </div>
+                <h3>点击或拖拽图片到此处</h3>
+                <p class="upload-hint">支持 JPG、PNG、BMP 等格式，最大 20MB</p>
+                <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+            </div>
+        </div>
+
+        <div class="preview-section" style="display: none;" id="previewSection">
+            <h2>待处理图片</h2>
+            <div class="image-list" id="imageList">
+                <!-- 图片列表将通过 JavaScript 动态添加 -->
+            </div>
+            
+            <div class="controls">
+                <div class="options-group">
+                    <label>
+                        <input type="checkbox" id="keepFormat" checked>
+                        保持原格式
+                    </label>
+                    <label>
+                        <input type="checkbox" id="autoRotate" checked>
+                        自动校正方向
+                    </label>
+                    <label>
+                        <input type="checkbox" id="enhanceText" checked>
+                        优化文字清晰度
+                    </label>
+                </div>
+                
+                <button class="download-btn" id="convertBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    开始转换
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/img-to-word.js"></script>
+</body>
+</html> 

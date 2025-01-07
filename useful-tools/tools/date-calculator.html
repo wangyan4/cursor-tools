@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日期计算器 - 在线工具箱</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="nav-bar">
+        <div class="container">
+            <a href="../index.html" class="nav-back">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+                返回工具箱
+            </a>
+        </div>
+    </nav>
+
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="header">
+            <h1>日期计算器</h1>
+            <p class="subtitle">计算日期差值，推算未来或过去日期，支持农历显示</p>
+        </header>
+
+        <!-- 计算器区域 -->
+        <div class="calculator-section">
+            <!-- 日期差值计算 -->
+            <div class="calc-card">
+                <h2>日期差值计算</h2>
+                <div class="date-inputs">
+                    <div class="date-input-group">
+                        <label>起始日期</label>
+                        <input type="date" id="startDate" min="1901-01-01">
+                    </div>
+                    <div class="date-input-group">
+                        <label>结束日期</label>
+                        <input type="date" id="endDate" min="1901-01-01">
+                    </div>
+                </div>
+                <div class="result-box" id="diffResult">
+                    <div class="date-lunar-group">
+                        <div class="date-item">
+                            <span class="label">起始日期：</span>
+                            <span class="value" id="startDateStr">-</span>
+                            <span class="lunar" id="startLunar">-</span>
+                        </div>
+                        <div class="date-item">
+                            <span class="label">结束日期：</span>
+                            <span class="value" id="endDateStr">-</span>
+                            <span class="lunar" id="endLunar">-</span>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">相差天数：</span>
+                        <span class="value" id="diffDays">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">相差周数：</span>
+                        <span class="value" id="diffWeeks">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">相差月数：</span>
+                        <span class="value" id="diffMonths">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 日期推算 -->
+            <div class="calc-card">
+                <h2>日期推算</h2>
+                <div class="calc-inputs">
+                    <div class="input-group">
+                        <label>基准日期</label>
+                        <input type="date" id="baseDate" min="1901-01-01">
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <input type="number" id="calcValue" placeholder="输入数值">
+                        </div>
+                        <div class="input-group">
+                            <select id="calcUnit">
+                                <option value="days">天</option>
+                                <option value="weeks">周</option>
+                                <option value="months">月</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <select id="calcDirection">
+                                <option value="after">之后</option>
+                                <option value="before">之前</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-box" id="calcResult">
+                    <div class="result-item">
+                        <span class="label">计算结果：</span>
+                        <span class="value" id="resultDate">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">农历日期：</span>
+                        <span class="value" id="lunarDate">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/lunar.js"></script>
+    <script src="../js/date-calculator.js"></script>
+</body>
+</html> 
