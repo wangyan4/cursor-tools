@@ -29,42 +29,20 @@
 
         <!-- 上传区域 -->
         <div class="upload-area" id="uploadArea">
-            <input type="file" id="imageInput" accept="image/png, image/jpeg" hidden>
+            <input type="file" id="imageInput" accept="image/png, image/jpeg" multiple hidden>
             <div class="upload-box">
                 <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
                 </svg>
                 <p>点击或拖拽图片到此处上传</p>
-                <p class="upload-hint">支持 PNG、JPG 格式</p>
+                <p class="upload-hint">支持 PNG、JPG 格式，最多10张</p>
             </div>
         </div>
 
         <!-- 图片预览和控制区域 -->
         <div class="preview-section" id="previewSection" style="display: none;">
-            <div class="preview-container">
-                <!-- 原始图片预览 -->
-                <div class="preview-box">
-                    <h3>原始图片</h3>
-                    <div class="image-preview">
-                        <img id="originalPreview" alt="原始图片">
-                    </div>
-                    <div class="image-info">
-                        <span>大小：</span>
-                        <span id="originalSize">0 KB</span>
-                    </div>
-                </div>
-
-                <!-- 压缩后图片预览 -->
-                <div class="preview-box">
-                    <h3>压缩后</h3>
-                    <div class="image-preview">
-                        <img id="compressedPreview" alt="压缩后图片">
-                    </div>
-                    <div class="image-info">
-                        <span>大小：</span>
-                        <span id="compressedSize">0 KB</span>
-                    </div>
-                </div>
+            <div class="image-list" id="imageList">
+                <!-- 图片列表将通过 JavaScript 动态添加 -->
             </div>
 
             <!-- 压缩控制区域 -->

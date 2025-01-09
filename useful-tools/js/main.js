@@ -2,18 +2,20 @@
 const uploadArea = document.getElementById('uploadArea');
 const imageInput = document.getElementById('imageInput');
 const previewSection = document.getElementById('previewSection');
-const originalPreview = document.getElementById('originalPreview');
-const compressedPreview = document.getElementById('compressedPreview');
-const originalSize = document.getElementById('originalSize');
-const compressedSize = document.getElementById('compressedSize');
+const imageList = document.getElementById('imageList');
 const qualitySlider = document.getElementById('quality');
 const qualityValue = document.getElementById('qualityValue');
 const downloadBtn = document.getElementById('downloadBtn');
 
-let originalImage = null;
+let imageItems = [];
+const MAX_IMAGES = 10;
 
 // 上传区域事件处理
 uploadArea.addEventListener('click', () => {
+    if (imageItems.length >= MAX_IMAGES) {
+        alert(`最多只能上传${MAX_IMAGES}张图片`);
+        return;
+    }
     imageInput.click();
 });
 
@@ -34,91 +36,162 @@ uploadArea.addEventListener('drop', (e) => {
     uploadArea.querySelector('.upload-box').style.borderColor = '#e5e5e5';
     uploadArea.querySelector('.upload-box').style.backgroundColor = 'transparent';
     
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
-        handleImage(file);
-    }
+    const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+    handleFiles(files);
 });
 
 // 文件选择处理
 imageInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-        handleImage(file);
-    }
+    const files = Array.from(e.target.files);
+    handleFiles(files);
 });
 
-// 图片处理函数
-function handleImage(file) {
-    // 显示原始文件大小
-    originalSize.textContent = formatFileSize(file.size);
-    
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        originalImage = new Image();
-        originalImage.src = e.target.result;
-        originalImage.onload = () => {
-            originalPreview.src = originalImage.src;
-            compressImage();
+// 处理文件函数
+function handleFiles(files) {
+    if (imageItems.length + files.length > MAX_IMAGES) {
+        alert(`最多只能上传${MAX_IMAGES}张图片`);
+        return;
+    }
+
+    files.forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const imageItem = createImageItem(file, e.target.result);
+            imageItems.push(imageItem);
+            imageList.appendChild(imageItem.element);
             previewSection.style.display = 'block';
-            updateSliderProgress(qualitySlider);
+            compressImage(imageItem);
         };
-    };
-    reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+    });
 }
 
-// 压缩图片函数
-function compressImage() {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
+// 创建图片项
+function createImageItem(file, src) {
+    const div = document.createElement('div');
+    div.className = 'image-item';
     
-    // 保持原始宽高比
-    canvas.width = originalImage.width;
-    canvas.height = originalImage.height;
+    const previewContainer = document.createElement('div');
+    previewContainer.className = 'preview-container';
     
-    ctx.drawImage(originalImage, 0, 0);
+    const img = document.createElement('img');
+    img.src = src;
     
-    const quality = qualitySlider.value / 100;
-    const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+    const info = document.createElement('div');
+    info.className = 'info';
+    info.textContent = formatFileSize(file.size);
     
-    compressedPreview.src = compressedDataUrl;
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'remove-btn';
+    removeBtn.innerHTML = '×';
     
-    // 计算压缩后文件大小
-    const base64Length = compressedDataUrl.length - 'data:image/jpeg;base64,'.length;
-    const compressedBytes = base64Length * 0.75;
-    compressedSize.textContent = formatFileSize(compressedBytes);
+    const progress = document.createElement('div');
+    progress.className = 'progress';
+    const progressBar = document.createElement('div');
+    progressBar.className = 'progress-bar';
+    progress.appendChild(progressBar);
+    
+    previewContainer.appendChild(img);
+    div.appendChild(previewContainer);
+    div.appendChild(info);
+    div.appendChild(removeBtn);
+    div.appendChild(progress);
+    
+    const imageItem = {
+        element: div,
+        file: file,
+        originalImage: null,
+        compressedImage: null,
+        progressBar: progressBar,
+        info: info
+    };
+    
+    removeBtn.onclick = () => {
+        const index = imageItems.indexOf(imageItem);
+        if (index > -1) {
+            imageItems.splice(index, 1);
+            div.remove();
+            if (imageItems.length === 0) {
+                previewSection.style.display = 'none';
+            }
+        }
+    };
+    
+    return imageItem;
 }
+
+// 压缩图片
+async function compressImage(imageItem) {
+    const img = new Image();
+    img.src = URL.createObjectURL(imageItem.file);
+    
+    img.onload = () => {
+        imageItem.originalImage = img;
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = img.width;
+        canvas.height = img.height;
+        
+        ctx.drawImage(img, 0, 0);
+        
+        const quality = qualitySlider.value / 100;
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+        
+        // 计算压缩后大小
+        const base64Length = compressedDataUrl.length - 'data:image/jpeg;base64,'.length;
+        const compressedBytes = base64Length * 0.75;
+        
+        imageItem.compressedImage = compressedDataUrl;
+        imageItem.info.textContent = `${formatFileSize(imageItem.file.size)} → ${formatFileSize(compressedBytes)}`;
+        imageItem.progressBar.style.width = '100%';
+    };
+}
+
+// 下载压缩后的图片
+downloadBtn.addEventListener('click', () => {
+    if (imageItems.length === 0) return;
+    
+    if (imageItems.length === 1) {
+        // 单张图片直接下载
+        const link = document.createElement('a');
+        link.download = `compressed_${Date.now()}.jpg`;
+        link.href = imageItems[0].compressedImage;
+        link.click();
+    } else {
+        // 多张图片打包下载
+        const zip = new JSZip();
+        imageItems.forEach((item, index) => {
+            const base64Data = item.compressedImage.split(',')[1];
+            zip.file(`compressed_${index + 1}.jpg`, base64Data, {base64: true});
+        });
+        
+        zip.generateAsync({type: 'blob'}).then(content => {
+            const link = document.createElement('a');
+            link.download = `compressed_images_${Date.now()}.zip`;
+            link.href = URL.createObjectURL(content);
+            link.click();
+        });
+    }
+});
 
 // 更新滑动条进度条
 function updateSliderProgress(slider) {
     const value = (slider.value - slider.min) / (slider.max - slider.min) * 100;
-    if (slider.classList.contains('compress-slider')) {
-        slider.style.background = `linear-gradient(to right, var(--primary-color) 0%, var(--primary-color) ${value}%, #e5e5e5 ${value}%, #e5e5e5 100%)`;
-    }
+    slider.style.background = `linear-gradient(to right, var(--primary-color) 0%, var(--primary-color) ${value}%, #e5e5e5 ${value}%, #e5e5e5 100%)`;
 }
-
-// 初始化滑动条进度
-updateSliderProgress(qualitySlider);
 
 // 监听滑动条变化
 qualitySlider.addEventListener('input', function() {
     qualityValue.textContent = `${this.value}%`;
     updateSliderProgress(this);
-    if (originalImage) {
-        compressImage();
-    }
+    imageItems.forEach(item => compressImage(item));
 });
 
-// 下载按钮事件
-downloadBtn.addEventListener('click', () => {
-    if (!compressedPreview.src) return;
-    
-    const link = document.createElement('a');
-    const timestamp = new Date().getTime();
-    link.download = `compressed_image_${timestamp}.jpg`;
-    link.href = compressedPreview.src;
-    link.click();
-});
+// 初始化滑动条进度
+updateSliderProgress(qualitySlider);
 
 // 文件大小格式化函数
 function formatFileSize(bytes) {

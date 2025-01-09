@@ -135,6 +135,7 @@ body {
 .quality-control label {
     display: block;
     margin-bottom: 0.5rem;
+    color: var(--text-color);
     font-weight: 500;
 }
 
@@ -143,40 +144,52 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
-    width: 100%;
-    max-width: 400px;
-    margin-top: 0.5rem;
 }
 
 /* 压缩工具滑动条样式 */
 .compress-slider {
     flex: 1;
-    height: 6px;
     -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
     background: #e5e5e5;
-    border-radius: 3px;
-    position: relative;
-    width: 100%;
+    outline: none;
+    padding: 0;
+    margin: 0;
 }
 
+/* 滑动条已滑过的部分 */
 .compress-slider::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 6px;
-    border-radius: 3px;
+    -webkit-appearance: none;
+    height: 4px;
 }
 
+/* 滑动条滑块样式 */
 .compress-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    background: white;
-    border: 2px solid var(--primary-color);
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
+    background: var(--primary-color);
     cursor: pointer;
-    margin-top: -7px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    position: relative;
-    z-index: 2;
+    margin-top: -6px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+/* 滑动条滑块悬停效果 */
+.compress-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* 滑动条值显示 */
+#qualityValue {
+    min-width: 3rem;
+    color: var(--text-color);
+    font-weight: 500;
 }
 
 /* 尺寸调整工具滑动条样式 */
@@ -683,30 +696,71 @@ body {
 .image-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .image-item {
-    background: white;
-    border-radius: var(--border-radius);
-    padding: 1rem;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-}
-
-.image-preview {
-    width: 100%;
-    height: 150px;
-    background: #fafafa;
+    position: relative;
+    border: 1px solid #e5e5e5;
     border-radius: calc(var(--border-radius) - 4px);
-    overflow: hidden;
-    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: white;
 }
 
-.image-preview img {
+.image-item .preview-container {
+    position: relative;
+    padding-top: 75%; /* 4:3 比例 */
+}
+
+.image-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.image-item .info {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--secondary-text);
+}
+
+.image-item .remove-btn {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ff3b30;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.image-item .progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #e5e5e5;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.image-item .progress-bar {
+    height: 100%;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
 }
 
 .image-info {
